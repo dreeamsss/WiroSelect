@@ -9,7 +9,7 @@ const customSelect = new WiroSelect(selector, { options })
 ```
 - _selector_ - селектор основного элемента ```<select>```
 - _options_:
-  - ___selectedClass___ - ваш кастомный класс, который производится к выбранному элементу (по умолчанию ```"wiroSelect __ item--selected"```)
+  - ___selectedClass___ - ваш кастомный класс, который добавляется к выбранному элементу (по умолчанию ```"wiroSelect __ item--selected"```)
   - ___slideToggleTiming___ - время закрытия и открытия селекта в миллисекундах
 
 ## Свойства:
