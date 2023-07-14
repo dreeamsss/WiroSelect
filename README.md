@@ -24,7 +24,7 @@ options:
 // HTML
 <select class="mycars">
   <option value="Mercedes">Mercedes</option>
-  <option value="Minivan">Minivan</option>
+  <option value="Minivan">Minivan</option> 
   <option value="Landau">Landau</option>
 </select>
 
