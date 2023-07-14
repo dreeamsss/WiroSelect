@@ -5,7 +5,7 @@
 Класс WiroSelect при установке экземляра принимает следующие параметры:
 
 ```javascript
-const customSelect = new Wiro(selector, { options })
+const customSelect = new WiroSelect(selector, { options })
 ```
 - _selector_ - селектор основного элемента ```<select>```
 - _options_:
