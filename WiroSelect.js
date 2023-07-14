@@ -1,12 +1,9 @@
 class WiroSelect {
-  _selectedname;
-  _selectedvalue;
-  _selectedIndex;
-
-  _selectWrapper;
-  _selectBtn;
-  _selectList;
-
+  /**
+   * Конструктор класса WiroSelect.
+   * @param {string} select - Селектор основного элемента select.
+   * @param {object} options - Настройки для класса WiroSelect.
+   */
   constructor(select, options) {
     const defaultOptions = {
       selectedClass: "wiroSelect__item--selected",
@@ -16,7 +13,7 @@ class WiroSelect {
     this.options = { ...defaultOptions, ...options };
 
     this.select = $(select);
-    this.selectOptions = $(this.select).find("option");
+    this.selectOptions = this.select.find("option");
 
     this._selectedname = this.select.attr("name");
 
@@ -24,21 +21,33 @@ class WiroSelect {
     this.events();
   }
 
-  // get properties
-
+  /**
+   * Получает значение выбранного элемента.
+   * @returns {string} - Значение выбранного элемента.
+   */
   get value() {
     return this._selectedvalue;
   }
 
+  /**
+   * Получает имя выбранного элемента.
+   * @returns {string} - Имя выбранного элемента.
+   */
   get name() {
     return this._selectedname;
   }
 
+  /**
+   * Получает индекс выбранного элемента.
+   * @returns {number} - Индекс выбранного элемента.
+   */
   get selectedIndex() {
     return this._selectedIndex;
   }
 
-  // elements rendering
+  /**
+   * Рендеринг элементов интерфейса.
+   */
   render() {
     this.select.addClass("wiroSelect__hidden");
 
@@ -71,6 +80,9 @@ class WiroSelect {
     $(this.select).after(this._selectWrapper);
   }
 
+  /**
+   * Создание элементов интерфейса.
+   */
   createElems() {
     this._selectWrapper = $('<div class="wiroSelect"></div>');
     this._selectBtn = $(
@@ -81,6 +93,9 @@ class WiroSelect {
     );
   }
 
+  /**
+   * Назначение обработчиков событий.
+   */
   events() {
     if (!this._selectWrapper) return false;
 
@@ -88,7 +103,6 @@ class WiroSelect {
       this.selectToggle();
     });
 
-    // делаем элемень выбранным. также синхронизируем его с основным select
     this._selectWrapper.on("click", ".wiroSelect__item", (e) => {
       const targetItem = $(e.target);
 
@@ -111,7 +125,6 @@ class WiroSelect {
       this.selectToggle();
     });
 
-    // закрывать select, если мы кликнули за его пределами
     $(window).on("click", (e) => {
       if (
         !$(e.target).closest(this._selectWrapper).length &&
@@ -149,6 +162,10 @@ class WiroSelect {
     });
   }
 
+  /**
+   * Выбор элемента по индексу.
+   * @param {number} index - Индекс элемента для выбора.
+   */
   selectOptionByIndex(index) {
     const targetItem = this._selectWrapper.find(`[data-index="${index}"]`);
     if (targetItem.length) {
@@ -171,15 +188,28 @@ class WiroSelect {
     }
   }
 
+  /**
+   * Проверка, открыт ли select.
+   * @returns {boolean} - true, если select открыт, иначе false.
+   */
   isSelectOpened() {
     return this._selectWrapper.hasClass("wiroSelect--expanded");
   }
 
+  /**
+   * Переключение состояния select.
+   */
   selectToggle() {
-    if (!this.isSelectOpened()) this.openSelect();
-    else this.closeSelect();
+    if (!this.isSelectOpened()) {
+      this.openSelect();
+    } else {
+      this.closeSelect();
+    }
   }
 
+  /**
+   * Открытие select.
+   */
   openSelect() {
     this._selectBtn.addClass("active");
     this._selectWrapper.addClass("wiroSelect--expanded");
@@ -191,6 +221,9 @@ class WiroSelect {
       .slideDown(this.options.slideToggleTiming);
   }
 
+  /**
+   * Закрытие select.
+   */
   closeSelect() {
     this._selectBtn.removeClass("active");
 
@@ -203,6 +236,9 @@ class WiroSelect {
       });
   }
 
+  /**
+   * Установка позиции списка select.
+   */
   selectListPosition() {
     const btnHeight = this._selectBtn.outerHeight();
 
@@ -227,3 +263,4 @@ class WiroSelect {
     }
   }
 }
+
