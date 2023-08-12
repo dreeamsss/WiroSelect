@@ -86,7 +86,7 @@ class WiroSelect {
   createElems() {
     this._selectWrapper = $('<div class="wiroSelect"></div>');
     this._selectBtn = $(
-      `<button type="button" _selectedname="${this._selectedname}" class="wiroSelect__btn"  role="button" aria-haspopup="true"></button>`
+      `<button type="button" name="${this._selectedname}" class="wiroSelect__btn"  role="button" aria-haspopup="true"></button>`
     );
     this._selectList = $(
       '<div class="wiroSelect__list" role="select" aria-expanded="false" aria-hidden="true"></div>'
