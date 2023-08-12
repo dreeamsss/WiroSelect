@@ -55,7 +55,7 @@ class WiroSelect {
 
     $(this.selectOptions).each((idx, item) => {
       const selectItem = $(
-        '<div class="wiroSelect__item" role="option"></div>'
+        '<div class="wiroSelect__item" role="option" tabindex="-1"></div>'
       );
 
       selectItem
@@ -86,7 +86,7 @@ class WiroSelect {
   createElems() {
     this._selectWrapper = $('<div class="wiroSelect"></div>');
     this._selectBtn = $(
-      `<button type="button" _selectedname="${this._selectedname}" class="wiroSelect__btn" role="button" aria-haspopup="true"></button>`
+      `<button type="button" _selectedname="${this._selectedname}" class="wiroSelect__btn"  role="button" aria-haspopup="true"></button>`
     );
     this._selectList = $(
       '<div class="wiroSelect__list" role="select" aria-expanded="false" aria-hidden="true"></div>'
@@ -122,7 +122,7 @@ class WiroSelect {
       $(this.selectOptions).eq(targetItem.data("index")).prop("selected", true);
       this._selectBtn.text(targetItem.text());
 
-      this.selectToggle();
+      this.closeSelect();
     });
 
     $(window).on("click", (e) => {
@@ -134,7 +134,9 @@ class WiroSelect {
       }
     });
 
-    this._selectWrapper.on("keydown", ".wiroSelect__btn", (e) => {
+    this._selectWrapper.on("keydown", (e) => {
+      if (!this.isSelectOpened()) return;
+
       if (e.key === "ArrowUp" || e.key === "ArrowDown") {
         e.preventDefault();
         const currentIndex = this._selectedIndex;
@@ -151,14 +153,14 @@ class WiroSelect {
         this.selectOptionByIndex(newIndex);
       }
 
-      if (e.key === "Escape" && this.isSelectOpened()) {
+      if (e.key === "Tab") {
+        this.closeSelect();
+      }
+
+      if (e.code === "Space" || e.key === "Escape" || e.key === "Enter") {
         this.closeSelect();
         e.stopPropagation();
       }
-    });
-
-    this._selectBtn.on("blur", (e) => {
-      this.closeSelect();
     });
   }
 
@@ -168,6 +170,9 @@ class WiroSelect {
    */
   selectOptionByIndex(index) {
     const targetItem = this._selectWrapper.find(`[data-index="${index}"]`);
+
+    targetItem.focus();
+
     if (targetItem.length) {
       this._selectWrapper
         .find(".wiroSelect__item")
@@ -263,4 +268,3 @@ class WiroSelect {
     }
   }
 }
-
